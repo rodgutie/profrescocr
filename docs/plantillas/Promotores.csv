@@ -1,0 +1,4 @@
+codigo,nombre,comision_pct,activo
+PF001,Oficina ProFresco,0,SI
+PF002,Promotor de ejemplo,5,SI
+DEMO,Código para pruebas,0,SI
