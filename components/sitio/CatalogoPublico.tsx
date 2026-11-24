@@ -47,7 +47,7 @@ export function CatalogoPublico({ productos }: { productos: Producto[] }) {
               className="group text-left"
             >
               <div
-                className={`aspect-square overflow-hidden rounded-[28px] border-4 transition-colors ${activa ? "border-barro" : "border-transparent group-hover:border-brote"}`}
+                className={`aspect-square overflow-hidden rounded-[28px] border-[3px] bg-white transition-colors ${activa ? "border-barro" : "border-linea group-hover:border-hoja"}`}
               >
                 <FotoProducto
                   src={c.foto?.imagen || ""}
@@ -73,7 +73,7 @@ export function CatalogoPublico({ productos }: { productos: Producto[] }) {
       <ul className="mt-5 grid grid-cols-2 gap-x-4 gap-y-7 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">
         {visibles.map((p) => (
           <li key={p.id}>
-            <div className="aspect-[4/5] overflow-hidden rounded-2xl bg-campo">
+            <div className="aspect-square overflow-hidden rounded-2xl border border-linea bg-white">
               <FotoProducto src={p.imagen} nombre={p.nombre} categoria={p.categoria} className="h-full w-full" />
             </div>
             <p className="mt-2 font-extrabold leading-snug">{p.nombre}</p>

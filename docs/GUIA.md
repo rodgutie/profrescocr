@@ -43,10 +43,11 @@ En Vercel: **Add New → Project → Import** el repositorio → **Deploy**. Ya 
 |---|---|---|---|
 | `id` | sí | `TOM-01` | Único y **no lo cambie** después: los pedidos lo usan para “Repetir pedido”. |
 | `nombre` | sí | Tomate | |
-| `categoria` | sí | Verduras | Las categorías salen solas de esta columna. |
-| `unidad` | sí | kg, unidad, rollo, cartón 30 | Si dice `kg`, el cliente puede pedir de medio en medio kilo. |
-| `precio_residencial` | sí | 1200 | Precio para hogares. |
-| `precio_comercial` | no | 1050 | Precio para comercio / instituciones. Si está vacío se usa el residencial. |
+| `categoria` | sí | Verduras | Agrupa los productos en el sitio. Las categorías salen solas de esta columna y aparecen en el orden de `orden`. |
+| `unidad` | sí | kg, unidad, rollo, paquete | Se muestra junto al precio (₡1 430 / kg). Si dice `kg`, el cliente puede pedir de medio en medio kilo. |
+| `linea` | no | Básico, Surtido, Importado, Otros | Clasificación interna de ProFresco. No se muestra en el sitio. |
+| `precio` | sí | 1430 | Precio de la semana, en colones, sin símbolo. Por ahora es el mismo para todos los clientes. |
+| `precio_comercial` | no | 1300 | Déjelo vacío. Si algún día los negocios tienen otro precio, se escribe aquí y el sitio lo aplica solo a clientes comerciales. |
 | `imagen` | no | (ver abajo) | |
 | `activo` | no | SI / NO | `NO` lo oculta sin borrarlo. Vacío = SI. |
 | `destacado` | no | SI | Aparece primero en la página de inicio. |
@@ -63,23 +64,23 @@ Un código inactivo ya no sirve para registrarse, pero sus clientes y comisiones
 
 ## 3. Fotos de los productos
 
-La columna `imagen` acepta tres cosas. **Recomendado: Google Drive.**
+Las 58 fotos del catálogo actual ya están dentro del proyecto, en `public/productos/`, optimizadas a 800 px. En el Sheet, la columna `imagen` tiene el nombre del archivo (`tomate.jpg`). Así cargan rápido y no dependen de ningún servicio externo.
 
-**A. Google Drive (lo más fácil para el equipo)**
-1. Cree una carpeta “Fotos ProFresco” en Drive.
-2. Compártala como **Cualquier persona con el enlace → Lector**.
-3. Suba las fotos (cuadradas o casi cuadradas, mínimo 800 × 800 px, fondo limpio).
-4. En cada foto: clic derecho → Compartir → **Copiar vínculo**, y péguelo en la columna `imagen`.
-El sitio convierte ese enlace automáticamente en una imagen.
+Para **productos nuevos**, la columna `imagen` acepta tres cosas:
 
-**B. Cualquier URL pública** de una imagen (`https://...jpg`), por ejemplo de Cloudinary.
+**A. Enlace de Google Drive (lo más fácil para el equipo, no requiere programador)**
+1. Cree una carpeta “Fotos ProFresco” en Drive y compártala como **Cualquier persona con el enlace → Lector**.
+2. Suba la foto (cuadrada, fondo blanco, mínimo 800 × 800 px, igual que las actuales).
+3. Clic derecho en la foto → Compartir → **Copiar vínculo**, y péguelo en la columna `imagen`.
+El sitio convierte ese enlace en una imagen automáticamente.
 
-**C. Nombre de archivo** (`tomate.jpg`) para fotos guardadas en `public/productos/` del proyecto. Sirve para fotos fijas; cada cambio requiere un `git push`.
+**B. Cualquier URL pública** de una imagen (`https://...jpg`).
 
-Si un producto no tiene foto, o la foto falla, se muestra un ícono del producto en lugar de un espacio roto.
+**C. Nombre de archivo**: agregue la foto a `public/productos/` en el proyecto, haga `git push`, y escriba el nombre en la columna. Es la opción más rápida para el cliente final, pero necesita a alguien con acceso al código.
 
-> Consejo: mismo fondo, misma luz y mismo encuadre en todas las fotos hacen que el catálogo se vea profesional.
-> Las fotos de ejemplo actuales son recortes de una sola imagen; reemplácelas por fotos propias.
+Si un producto no tiene foto, o la foto falla, el sitio muestra un ícono del producto en lugar de un espacio roto.
+
+> Mantenga el mismo estilo de las fotos actuales (fondo blanco, producto centrado, cuadrada) para que el catálogo se vea parejo.
 
 ## 4. Supabase (login y base de datos)
 
