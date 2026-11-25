@@ -11,8 +11,14 @@ const sinPrecios = (ps: Producto[]) => ps.map(({ precioResidencial, precioComerc
 export async function GET(req: Request) {
   const productos = await leerProductos();
 
-  // Modo demo: no hay sesiones reales, el navegador decide qué precio mostrar.
-  if (IS_DEMO) return NextResponse.json({ productos, modo: "demo" });
+  // Modo demo: sin sesión no hay precios. Con sesión de prueba, el navegador elige el precio según el tipo de cliente.
+  if (IS_DEMO) {
+    const conSesion = Boolean(req.headers.get("x-profresco-demo"));
+    return NextResponse.json(
+      { productos: conSesion ? productos : sinPrecios(productos), modo: "demo" },
+      { headers: { "Cache-Control": "private, no-store" } },
+    );
+  }
 
   const user = await usuarioDeRequest(req);
   if (!user) return NextResponse.json({ productos: sinPrecios(productos) });

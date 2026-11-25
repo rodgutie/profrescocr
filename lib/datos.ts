@@ -38,7 +38,8 @@ function guardarLocal(clave: string, valor: unknown) {
 const idDemo = (email: string) => "demo-" + Array.from(email).reduce((h, c) => (h * 31 + c.charCodeAt(0)) >>> 0, 7).toString(36);
 
 async function conToken(sesion: Sesion | null): Promise<HeadersInit> {
-  if (IS_DEMO || !sesion) return {};
+  if (!sesion) return {};
+  if (IS_DEMO) return { "x-profresco-demo": sesion.userId };
   const { data } = await supabase().auth.getSession();
   const token = data.session?.access_token;
   return token ? { Authorization: `Bearer ${token}` } : {};
